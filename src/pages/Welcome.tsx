@@ -140,6 +140,60 @@ export const Welcome = () => {
         </div>
       </section>
 
+      {/* How it Works Section */}
+      <section className="py-24 px-6 bg-black/5 z-10 border-t border-b border-border relative">
+        <div className="max-w-5xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">How It Works</h2>
+            <p className="text-secondary max-w-2xl mx-auto">From messy data to fair models in three distinct steps.</p>
+          </div>
+
+          <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-neon-violet before:to-transparent">
+            {/* Step 1 */}
+            <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+              <div className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-dark-800 group-hover:border-neon-cyan text-tertiary shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-colors">
+                <span className="font-display font-bold text-neon-cyan">1</span>
+              </div>
+              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-border bg-dark-800/80 backdrop-blur shadow">
+                <div className="flex items-center mb-2">
+                  <Database className="text-neon-cyan mr-2" size={20} />
+                  <h4 className="font-display font-bold text-lg">Ingest & Profile</h4>
+                </div>
+                <p className="text-secondary text-sm">Connect your raw datasets. FairLens immediately profiles the distributions and identifies proxy variables.</p>
+              </div>
+            </motion.div>
+            
+            {/* Step 2 */}
+            <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+              <div className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-dark-800 group-hover:border-neon-violet text-tertiary shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-colors">
+                <span className="font-display font-bold text-neon-violet">2</span>
+              </div>
+              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-border bg-dark-800/80 backdrop-blur shadow">
+                <div className="flex items-center mb-2">
+                  <Activity className="text-neon-violet mr-2" size={20} />
+                  <h4 className="font-display font-bold text-lg">Analyze Metrics</h4>
+                </div>
+                <p className="text-secondary text-sm">Our dual-pane Bias Engine calculates Disparate Impact, Equal Opportunity, and Demographic Parity.</p>
+              </div>
+            </motion.div>
+
+            {/* Step 3 */}
+            <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+              <div className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-dark-800 group-hover:border-neon-blue text-tertiary shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-colors">
+                <span className="font-display font-bold text-neon-blue">3</span>
+              </div>
+              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-border bg-dark-800/80 backdrop-blur shadow">
+                <div className="flex items-center mb-2">
+                  <Bot className="text-neon-blue mr-2" size={20} />
+                  <h4 className="font-display font-bold text-lg">AI Mitigation</h4>
+                </div>
+                <p className="text-secondary text-sm">Consult the FairLens Chat Assistant to receive tailored re-weighing strategies and code snippets.</p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Why FairLens */}
       <section className="min-h-screen py-24 px-6 z-10 flex items-center justify-center relative">
         <div className="max-w-6xl w-full">
