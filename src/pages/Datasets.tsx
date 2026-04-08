@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { GlassCard } from '../components/GlassCard';
 import { UploadCloud, FileText, CheckCircle, Database, AlertTriangle } from 'lucide-react';
 import { NeonButton } from '../components/NeonButton';
 
 export const Datasets = () => {
   const [isDragging, setIsDragging] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedFile(e.target.files[0].name);
+    }
+  };
 
   return (
     <div className="space-y-8">
@@ -26,12 +34,25 @@ export const Datasets = () => {
             onDragLeave={() => setIsDragging(false)}
             onDrop={(e) => { e.preventDefault(); setIsDragging(false); }}
           >
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              className="hidden" 
+              onChange={handleFileChange}
+              accept=".csv,.json,.parquet"
+            />
             <div className="mb-6 p-4 rounded-full bg-dark-900 shadow-inner border border-border">
               <UploadCloud size={48} className={`transition-colors ${isDragging ? 'text-neon-cyan' : 'text-tertiary'}`} />
             </div>
-            <h3 className="text-xl font-display font-semibold mb-2">Drag & Drop Dataset</h3>
+            <h3 className="text-xl font-display font-semibold mb-2">
+              {selectedFile ? `Ready: ${selectedFile}` : 'Drag & Drop Dataset'}
+            </h3>
             <p className="text-tertiary mb-6 text-sm">Supports CSV, JSON, and Parquet files (Max 500MB)</p>
-            <NeonButton variant="cyan" label="Browse Files" />
+            <NeonButton 
+              variant="cyan" 
+              label={selectedFile ? "Upload Ready" : "Browse Files"} 
+              onClick={() => fileInputRef.current?.click()} 
+            />
           </div>
 
           {/* Database Connections */}
