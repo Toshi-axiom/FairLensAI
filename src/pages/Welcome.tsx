@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { NeonButton } from '../components/NeonButton';
 import { ShieldAlert, Activity, Database, CheckCircle2, Users, Scale, Bot } from 'lucide-react';
@@ -7,16 +7,29 @@ import { GlassCard } from '../components/GlassCard';
 
 export const Welcome = () => {
   const navigate = useNavigate();
+  const { scrollY } = useScroll();
+  
+  const heroY = useTransform(scrollY, [0, 1000], [0, 300]);
+  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
+  const blob1Y = useTransform(scrollY, [0, 1000], [0, -500]);
+  const blob2Y = useTransform(scrollY, [0, 1000], [0, 500]);
 
   return (
     <div className="min-h-screen bg-dark-900 flex flex-col relative overflow-hidden text-primary w-screen transition-colors duration-500">
-      {/* Animated Background ambient glow */}
-      <div className="fixed top-[10%] left-[10%] w-[50%] h-[50%] bg-neon-cyan/20 rounded-full blur-[150px] pointer-events-none animate-blob" style={{ animationDelay: '0s' }} />
-      <div className="fixed bottom-[10%] right-[10%] w-[50%] h-[50%] bg-neon-blue/20 rounded-full blur-[150px] pointer-events-none animate-blob" style={{ animationDelay: '2s', animationDirection: 'reverse' }} />
+      {/* Animated Background ambient glow with Parallax shifts */}
+      <motion.div 
+        style={{ y: blob1Y }} 
+        className="fixed top-[10%] left-[10%] w-[50%] h-[50%] bg-neon-cyan/20 rounded-full blur-[150px] pointer-events-none animate-blob" 
+      />
+      <motion.div 
+        style={{ y: blob2Y, animationDelay: '2s', animationDirection: 'reverse' }} 
+        className="fixed bottom-[10%] right-[10%] w-[50%] h-[50%] bg-neon-blue/20 rounded-full blur-[150px] pointer-events-none animate-blob" 
+      />
 
       {/* Hero Section */}
-      <section className="min-h-screen flex flex-col items-center justify-center pt-20 px-6 z-10">
+      <section className="min-h-screen flex flex-col items-center justify-center pt-20 px-6 z-10 relative">
         <motion.div 
+          style={{ y: heroY, opacity: heroOpacity }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -51,12 +64,6 @@ export const Welcome = () => {
               onClick={() => navigate('/auth', { state: { isSignup: true } })} 
               className="text-lg px-8 py-4"
             />
-            <button 
-              onClick={() => window.open('https://github.com/Toshi-axiom/FairLensAI', '_blank')}
-              className="text-secondary hover:text-primary transition-colors text-lg px-8 py-4 font-display font-medium"
-            >
-              View Documentation
-            </button>
           </div>
         </motion.div>
 
