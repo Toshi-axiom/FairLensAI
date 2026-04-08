@@ -1,73 +1,47 @@
-# React + TypeScript + Vite
+# FairLens AI 🛡️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**FairLens AI** is an intelligent, high-fidelity frontend platform designed to help users identify, analyze, and understand bias in data and AI models. The system acts as a smart assistant that simplifies complex fairness concepts into clear, actionable insights through a modern, web-based interface.
 
-Currently, two official plugins are available:
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=for-the-badge&logo=framer&logoColor=blue)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Core Features
 
-## React Compiler
+- **Dynamic Theming Engine:** A sophisticated styling system allowing users to freely toggle between a hyper-modern "Tech-Noir" Dark Mode and a highly legible "Frosted Silver" Light Mode.
+- **Mock Authentication Pipeline:** A complete simulated Auth module mapping user data into LocalStorage for session prototyping, including email parsing, password validation logic, and a Google SSO layout.
+- **Interactive Onboarding:** A built-in user tour (`react-joyride`) that guides first-time users smoothly through the dashboard layout and core product functionality.
+- **Bias Analysis Engine:** A chat-integrated diagnostic pane where users can communicate with the "FairLens Assistant" to interrogate identified dataset biases directly.
+- **Glassmorphic Component Library:** Specialized UI assets mapped uniquely to CSS variables using Tailwind plugins and Framer Motion context wrappers.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Quick Start
 
-## Expanding the ESLint configuration
+This project is built directly on the **Vite** bundler for blistering rapid development.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. Install Dependencies
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 2. Start the Development Server
+```bash
+npm run dev
 ```
+
+Navigate to `http://localhost:5173` to interact with the environment.
+
+## 📂 Project Structure
+
+- `/src/components`: Reusable layout modules (`GlassCard`, `NeonButton`, `TopBar`, `Sidebar`, `TourProvider`).
+- `/src/pages`: Top-level navigational route containers (`Welcome`, `Auth`, `Dashboard`, `Analysis`, `Settings`, `Datasets`).
+- `/src/contexts`: Global state providers (`ThemeContext`, `AuthContext`) driving the application memory arrays.
+
+## 🛠️ Next Steps (Backend Integration)
+
+Currently, the application runs entirely in the browser as a **presentation prototype**. The next phase requires:
+
+1. Binding the `@react-oauth/google` provider to the Google Sign-in button with a valid Cloud Client ID.
+2. Replacing LocalStorage mocks in `AuthContext` with a remote JWT authentication layer.
+3. Hooking real fairness APIs (like Python's `AIF360` or `Fairlearn`) into the REST requests on the `Analysis.tsx` endpoint.
