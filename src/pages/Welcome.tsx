@@ -51,7 +51,10 @@ export const Welcome = () => {
               onClick={() => navigate('/auth', { state: { isSignup: true } })} 
               className="text-lg px-8 py-4"
             />
-            <button className="text-secondary hover:text-primary transition-colors text-lg px-8 py-4 font-display font-medium">
+            <button 
+              onClick={() => window.open('https://github.com/Toshi-axiom/FairLensAI', '_blank')}
+              className="text-secondary hover:text-primary transition-colors text-lg px-8 py-4 font-display font-medium"
+            >
               View Documentation
             </button>
           </div>
