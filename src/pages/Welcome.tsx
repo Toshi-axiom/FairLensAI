@@ -202,7 +202,7 @@ export const Welcome = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center"
+            className="max-w-3xl mx-auto"
           >
             <div className="space-y-12">
               <div className="mb-8">
@@ -229,16 +229,6 @@ export const Welcome = () => {
                   <p className="text-secondary text-base">Highlight and mitigate statistical biases that disproportionately affect underrepresented demographics.</p>
                 </div>
               </motion.div>
-            </div>
-            
-            <div className="perspective-[1000px]">
-              <GlassCard className="p-12 aspect-square flex flex-col justify-center items-center text-center relative overflow-hidden group border-2 border-border/50">
-                <div className="absolute inset-0 bg-gradient-to-bl from-neon-blue/20 via-transparent to-neon-violet/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                <Bot size={80} className="text-primary mb-8 drop-shadow-[0_0_30px_rgba(255,255,255,0.4)] z-10 group-hover:scale-110 transition-transform duration-500" />
-                <h3 className="text-4xl font-display font-black mb-4 z-10 text-primary">Ready to deploy?</h3>
-                <p className="text-secondary text-lg mb-10 z-10">Join elite ML engineering teams auditing thousands of production layers.</p>
-                <NeonButton variant="blue" label="Access Dashboard" onClick={() => navigate('/auth', { state: { isSignup: true } })} className="px-10 py-4 text-lg" />
-              </GlassCard>
             </div>
           </motion.div>
         </div>
