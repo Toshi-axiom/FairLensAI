@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useRef, useEffect } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { NeonButton } from '../components/NeonButton';
 import { ShieldAlert, Activity, Database, CheckCircle2, Users, Scale, Bot } from 'lucide-react';
@@ -7,195 +7,192 @@ import { GlassCard } from '../components/GlassCard';
 
 export const Welcome = () => {
   const navigate = useNavigate();
-  const { scrollY } = useScroll();
+  const containerRef = useRef<HTMLDivElement>(null);
   
-  const heroY = useTransform(scrollY, [0, 1000], [0, 300]);
-  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
-  const blob1Y = useTransform(scrollY, [0, 1000], [0, -500]);
-  const blob2Y = useTransform(scrollY, [0, 1000], [0, 500]);
+  // High-fidelity spring configurations mapped to window scroll position
+  const { scrollY } = useScroll();
+  const smoothScrollY = useSpring(scrollY, { stiffness: 100, damping: 20 });
+  
+  // Severe Z-Depth Multipliers for deep parallax illusion
+  const iconY = useTransform(smoothScrollY, [0, 1000], [0, 450]);
+  const iconOpacity = useTransform(smoothScrollY, [0, 300], [1, 0]);
+  
+  const titleY = useTransform(smoothScrollY, [0, 1000], [0, 250]);
+  const titleOpacity = useTransform(smoothScrollY, [0, 400], [1, 0]);
+  
+  const subtitleY = useTransform(smoothScrollY, [0, 1000], [0, 100]);
+  const subtitleOpacity = useTransform(smoothScrollY, [0, 500], [1, 0]);
+  
+  const buttonY = useTransform(smoothScrollY, [0, 1000], [0, -50]);
+  
+  // Background Ambient Multipliers
+  const blob1Y = useTransform(smoothScrollY, [0, 1200], [0, -800]);
+  const blob2Y = useTransform(smoothScrollY, [0, 1200], [0, 800]);
+  const blob1Scale = useTransform(smoothScrollY, [0, 800], [1, 1.5]);
+  const blob2Scale = useTransform(smoothScrollY, [0, 800], [1, 1.5]);
+
+  // Section 2 Background Grid Perspective
+  const gridScale = useTransform(smoothScrollY, [0, 1500], [1, 2]);
+  const gridRotateX = useTransform(smoothScrollY, [0, 1500], [40, 0]);
+  const gridOpacity = useTransform(smoothScrollY, [0, 500], [0.5, 0.1]);
 
   return (
-    <div className="min-h-screen bg-dark-900 flex flex-col relative overflow-hidden text-primary w-screen transition-colors duration-500">
-      {/* Animated Background ambient glow with Parallax shifts */}
+    <div ref={containerRef} className="min-h-[250vh] bg-dark-900 flex flex-col relative overflow-hidden text-primary w-screen transition-colors duration-500 perspective-[1000px]">
+      
+      {/* Immersive Grid Canvas */}
       <motion.div 
-        style={{ y: blob1Y }} 
-        className="fixed top-[10%] left-[10%] w-[50%] h-[50%] bg-neon-cyan/20 rounded-full blur-[150px] pointer-events-none animate-blob" 
+        style={{ scale: gridScale, rotateX: gridRotateX, opacity: gridOpacity }}
+        className="fixed inset-0 z-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDcpIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiPjxwb2x5Z29uIHBvaW50cz0iNDAgMCAwIDAgMCA0MCIvPjwvZz48L3N2Zz4=')] [mask-image:linear-gradient(to_bottom,black,transparent)] pointer-events-none"
+      />
+
+      {/* Deep Parallax Animated Background Blobs */}
+      <motion.div 
+        style={{ y: blob1Y, scale: blob1Scale }} 
+        className="fixed top-[-10%] left-[-10%] w-[60%] h-[60%] bg-neon-cyan/20 rounded-full blur-[180px] pointer-events-none mix-blend-screen" 
       />
       <motion.div 
-        style={{ y: blob2Y, animationDelay: '2s', animationDirection: 'reverse' }} 
-        className="fixed bottom-[10%] right-[10%] w-[50%] h-[50%] bg-neon-blue/20 rounded-full blur-[150px] pointer-events-none animate-blob" 
+        style={{ y: blob2Y, scale: blob2Scale }} 
+        className="fixed bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-neon-violet/20 rounded-full blur-[180px] pointer-events-none mix-blend-screen" 
       />
 
       {/* Hero Section */}
-      <section className="min-h-screen flex flex-col items-center justify-center pt-20 px-6 z-10 relative">
-        <motion.div 
-          style={{ y: heroY, opacity: heroOpacity }}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-4xl"
-        >
+      <section className="h-screen flex flex-col items-center justify-center pt-20 px-6 z-10 relative">
+        <div className="text-center max-w-4xl flex flex-col items-center relative perspective-[1200px]">
+          
           <motion.div 
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="flex justify-center mb-6"
+            style={{ y: iconY, opacity: iconOpacity, z: 100 }}
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20 }}
+            className="flex justify-center mb-8 absolute -top-24"
           >
-            <div className="w-20 h-20 rounded-2xl bg-dark-800 border border-neon-cyan/30 flex items-center justify-center shadow-[0_0_30px_rgba(34,211,238,0.3)]">
-              <ShieldAlert size={40} className="text-neon-cyan" />
+            <div className="w-24 h-24 rounded-2xl bg-dark-900/80 backdrop-blur-xl border border-neon-cyan/50 flex items-center justify-center shadow-[0_0_50px_rgba(34,211,238,0.4),inset_0_0_20px_rgba(34,211,238,0.2)]">
+              <ShieldAlert size={48} className="text-neon-cyan" />
             </div>
           </motion.div>
           
-          <h1 className="text-5xl md:text-7xl font-display font-bold mb-6 tracking-tight text-primary">
+          <motion.h1 
+            style={{ y: titleY, opacity: titleOpacity, z: 50 }}
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.1 }}
+            className="text-6xl md:text-8xl font-display font-black mb-8 tracking-tighter text-primary mt-12 relative drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+          >
             Uncover Bias with <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-violet text-glow">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-violet [text-shadow:0_0_40px_rgba(59,130,246,0.3)]">
               FairLens AI
             </span>
-          </h1>
+          </motion.h1>
           
-          <p className="text-lg md:text-xl text-secondary mb-12 max-w-2xl mx-auto font-light leading-relaxed">
-            An intelligent platform designed to help you identify, analyze, and understand bias in your datasets and AI models. Ensure fairness through clarity.
-          </p>
+          <motion.p 
+            style={{ y: subtitleY, opacity: subtitleOpacity, z: 0 }}
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
+            className="text-xl md:text-2xl text-secondary mb-16 max-w-3xl mx-auto font-light leading-relaxed drop-shadow-xl"
+          >
+            An intelligent platform designed to help you physically identify, analyze, and mathematically understand deep routing biases within your datasets out-of-the-box.
+          </motion.p>
           
-          <div className="flex items-center justify-center gap-6">
+          <motion.div 
+            style={{ y: buttonY, z: -50 }}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.3 }}
+            className="flex items-center justify-center gap-6"
+          >
             <NeonButton 
               variant="cyan" 
-              label="Get Started" 
+              label="Initialize Platform" 
               onClick={() => navigate('/auth', { state: { isSignup: true } })} 
-              className="text-lg px-8 py-4"
+              className="text-xl px-12 py-5 shadow-[0_0_50px_rgba(34,211,238,0.3)] hover:shadow-[0_0_80px_rgba(34,211,238,0.6)]"
             />
-          </div>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24 mb-16 max-w-5xl w-full">
-          <GlassCard accent="cyan" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-            <Database className="text-neon-cyan mb-4" size={32} />
-            <h3 className="text-xl font-display font-bold mb-2">Connect Data</h3>
-            <p className="text-secondary text-sm">Upload datasets or connect directly to your databases for real-time analysis.</p>
-          </GlassCard>
-          
-          <GlassCard accent="violet" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
-            <Activity className="text-neon-violet mb-4" size={32} />
-            <h3 className="text-xl font-display font-bold mb-2">Detect Bias</h3>
-            <p className="text-secondary text-sm">Automatic scanning for anomalies, imbalances, and demographic disparities.</p>
-          </GlassCard>
-          
-          <GlassCard accent="blue" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
-            <ShieldAlert className="text-neon-blue mb-4" size={32} />
-            <h3 className="text-xl font-display font-bold mb-2">AI Assistant</h3>
-            <p className="text-secondary text-sm">Conversational interface that explains fairness concepts in simple language.</p>
-          </GlassCard>
+          </motion.div>
         </div>
       </section>
 
-      {/* How it Works Section */}
-      <section className="py-24 px-6 bg-black/5 z-10 border-t border-b border-border">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">How It Works</h2>
-            <p className="text-secondary max-w-2xl mx-auto">From messy data to fair models in three distinct steps.</p>
-          </div>
-
-          <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-neon-violet before:to-transparent">
-            {/* Step 1 */}
-            <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-              <div className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-dark-800 group-hover:border-neon-cyan text-tertiary shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-colors">
-                <span className="font-display font-bold text-neon-cyan">1</span>
-              </div>
-              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-border bg-dark-800/80 backdrop-blur shadow">
-                <div className="flex items-center mb-2">
-                  <Database className="text-neon-cyan mr-2" size={20} />
-                  <h4 className="font-display font-bold text-lg">Ingest & Profile</h4>
-                </div>
-                <p className="text-secondary text-sm">Connect your raw datasets. FairLens immediately profiles the distributions and identifies proxy variables.</p>
-              </div>
-            </div>
-            
-            {/* Step 2 */}
-            <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-              <div className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-dark-800 group-hover:border-neon-violet text-tertiary shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-colors">
-                <span className="font-display font-bold text-neon-violet">2</span>
-              </div>
-              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-border bg-dark-800/80 backdrop-blur shadow">
-                <div className="flex items-center mb-2">
-                  <Activity className="text-neon-violet mr-2" size={20} />
-                  <h4 className="font-display font-bold text-lg">Analyze Metrics</h4>
-                </div>
-                <p className="text-secondary text-sm">Our dual-pane Bias Engine calculates Disparate Impact, Equal Opportunity, and Demographic Parity.</p>
-              </div>
-            </div>
-
-            {/* Step 3 */}
-            <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-              <div className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-dark-800 group-hover:border-neon-blue text-tertiary shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-colors">
-                <span className="font-display font-bold text-neon-blue">3</span>
-              </div>
-              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-border bg-dark-800/80 backdrop-blur shadow">
-                <div className="flex items-center mb-2">
-                  <Bot className="text-neon-blue mr-2" size={20} />
-                  <h4 className="font-display font-bold text-lg">AI Mitigation</h4>
-                </div>
-                <p className="text-secondary text-sm">Consult the FairLens Chat Assistant to receive tailored re-weighing strategies and code snippets.</p>
-              </div>
-            </div>
-          </div>
+      {/* Floating 3D Cards Section */}
+      <section className="min-h-screen py-24 px-6 z-10 flex items-center justify-center relative">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+          <motion.div initial={{ opacity: 0, y: 100 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ type: "spring" }}>
+            <GlassCard accent="cyan" className="p-8 h-[350px] flex flex-col justify-center border-t-2 border-t-neon-cyan/50 hover:-translate-y-4 duration-500">
+              <Database className="text-neon-cyan mb-6 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]" size={48} />
+              <h3 className="text-2xl font-display font-bold mb-4 tracking-wide text-primary">Connect Data</h3>
+              <p className="text-secondary text-base leading-relaxed">Instantly upload dynamic datasets or parse directly to your PostgreSQL clusters for real-time validation.</p>
+            </GlassCard>
+          </motion.div>
+          
+          <motion.div initial={{ opacity: 0, y: 100 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ type: "spring", delay: 0.1 }}>
+            <GlassCard accent="violet" className="p-8 h-[350px] flex flex-col justify-center border-t-2 border-t-neon-violet/50 hover:-translate-y-4 duration-500">
+              <Activity className="text-neon-violet mb-6 drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]" size={48} />
+              <h3 className="text-2xl font-display font-bold mb-4 tracking-wide text-primary">Detect Bias</h3>
+              <p className="text-secondary text-base leading-relaxed">Launch our proprietary engine to autonomously flag disparate impacts across multi-dimensional feature graphs.</p>
+            </GlassCard>
+          </motion.div>
+          
+          <motion.div initial={{ opacity: 0, y: 100 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ type: "spring", delay: 0.2 }}>
+            <GlassCard accent="blue" className="p-8 h-[350px] flex flex-col justify-center border-t-2 border-t-neon-blue/50 hover:-translate-y-4 duration-500">
+              <ShieldAlert className="text-neon-blue mb-6 drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]" size={48} />
+              <h3 className="text-2xl font-display font-bold mb-4 tracking-wide text-primary">AI Mitigation</h3>
+              <p className="text-secondary text-base leading-relaxed">Engage directly with the contextual Chat Assistant to rewrite biased parameters into actionable fairness logic.</p>
+            </GlassCard>
+          </motion.div>
         </div>
       </section>
 
       {/* Why FairLens */}
-      <section className="py-24 px-6 z-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">Why FairLens?</h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <div className="flex gap-4 items-start">
-                <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-500 shrink-0 border border-emerald-500/20">
-                  <CheckCircle2 size={24} />
+      <section className="min-h-screen py-24 px-6 z-10 flex items-center justify-center relative">
+        <div className="max-w-6xl w-full">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center"
+          >
+            <div className="space-y-12">
+              <div className="mb-8">
+                <h2 className="text-5xl font-display font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-500">Why FairLens?</h2>
+                <div className="h-1 w-20 bg-neon-cyan rounded-full shadow-[0_0_15px_rgba(34,211,238,0.5)]"></div>
+              </div>
+              
+              <motion.div whileHover={{ x: 10 }} className="flex gap-6 items-start transition-transform cursor-default">
+                <div className="p-4 rounded-xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                  <CheckCircle2 size={32} />
                 </div>
                 <div>
-                  <h4 className="font-display font-bold text-xl mb-1">Ethical Compliance</h4>
-                  <p className="text-secondary text-sm">Ensure your models comply with emerging AI regulations and ethical guidelines before reaching production.</p>
+                  <h4 className="font-display font-bold text-2xl mb-2 text-primary">Ethical Compliance</h4>
+                  <p className="text-secondary text-base">Ensure your models comply with emerging AI regulations and ethical guidelines before reaching production.</p>
                 </div>
-              </div>
-              <div className="flex gap-4 items-start">
-                <div className="p-2 rounded-lg bg-neon-blue/10 text-neon-blue shrink-0 border border-neon-blue/20">
-                  <Users size={24} />
-                </div>
-                <div>
-                  <h4 className="font-display font-bold text-xl mb-1">Protect Marginalized Groups</h4>
-                  <p className="text-secondary text-sm">Highlight and mitigate statistical biases that disproportionately affect underrepresented demographics.</p>
-                </div>
-              </div>
-              <div className="flex gap-4 items-start">
-                <div className="p-2 rounded-lg bg-neon-violet/10 text-neon-violet shrink-0 border border-neon-violet/20">
-                  <Scale size={24} />
+              </motion.div>
+              
+              <motion.div whileHover={{ x: 10 }} className="flex gap-6 items-start transition-transform cursor-default">
+                <div className="p-4 rounded-xl bg-neon-blue/10 text-neon-blue border border-neon-blue/30 shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+                  <Users size={32} />
                 </div>
                 <div>
-                  <h4 className="font-display font-bold text-xl mb-1">Brand Trust</h4>
-                  <p className="text-secondary text-sm">Demonstrate transparency to your users by actively monitoring and reporting on algorithmic fairness.</p>
+                  <h4 className="font-display font-bold text-2xl mb-2 text-primary">Protect Groups</h4>
+                  <p className="text-secondary text-base">Highlight and mitigate statistical biases that disproportionately affect underrepresented demographics.</p>
                 </div>
-              </div>
+              </motion.div>
             </div>
             
-            <div>
-              <GlassCard className="p-8 aspect-square flex flex-col justify-center items-center text-center relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-tr from-neon-blue/10 to-neon-violet/10 group-hover:scale-110 transition-transform duration-700" />
-                <ShieldAlert size={64} className="text-primary mb-6 drop-shadow-[0_0_20px_rgba(34,211,238,0.5)] z-10" />
-                <h3 className="text-2xl font-display font-bold mb-2 z-10">Ready to secure your models?</h3>
-                <p className="text-secondary mb-8 z-10">Join leading AI teams using FairLens.</p>
-                <NeonButton variant="blue" label="Create Free Account" onClick={() => navigate('/auth', { state: { isSignup: true } })} />
+            <div className="perspective-[1000px]">
+              <GlassCard className="p-12 aspect-square flex flex-col justify-center items-center text-center relative overflow-hidden group border-2 border-border/50">
+                <div className="absolute inset-0 bg-gradient-to-bl from-neon-blue/20 via-transparent to-neon-violet/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                <Bot size={80} className="text-primary mb-8 drop-shadow-[0_0_30px_rgba(255,255,255,0.4)] z-10 group-hover:scale-110 transition-transform duration-500" />
+                <h3 className="text-4xl font-display font-black mb-4 z-10 text-primary">Ready to deploy?</h3>
+                <p className="text-secondary text-lg mb-10 z-10">Join elite ML engineering teams auditing thousands of production layers.</p>
+                <NeonButton variant="blue" label="Access Dashboard" onClick={() => navigate('/auth', { state: { isSignup: true } })} className="px-10 py-4 text-lg" />
               </GlassCard>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
       
       {/* Footer */}
-      <footer className="border-t border-border py-8 text-center text-tertiary text-sm z-10">
-        <p>&copy; 2026 FairLens AI. All rights reserved.</p>
+      <footer className="border-t border-border py-12 text-center text-tertiary text-sm z-10 bg-dark-900/80 backdrop-blur-md">
+        <p className="font-display tracking-widest uppercase">&copy; 2026 FairLens AI. All rights reserved.</p>
       </footer>
     </div>
   );
