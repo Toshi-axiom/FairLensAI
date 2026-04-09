@@ -9,17 +9,19 @@ export const Analysis = () => {
 
   return (
     <div className="flex flex-col h-[calc(100vh-140px)] space-y-4">
-      <div className="mb-2 shrink-0 flex items-center justify-between">
+      <div className="mb-2 shrink-0 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-3xl font-display font-bold text-primary mb-2 tracking-wide text-glow">Bias Analysis Engine</h2>
           <p className="text-secondary font-light">Interactive exploration of dataset anomalies with AI assistance.</p>
         </div>
-        <NeonButton 
-          variant="blue" 
-          label="Open AI Assistant" 
-          icon={<Sparkles size={18} />} 
-          onClick={openAssistant} 
-        />
+        <div className="self-start md:self-auto">
+          <NeonButton 
+            variant="blue" 
+            label="Open AI Assistant" 
+            icon={<Sparkles size={18} />} 
+            onClick={openAssistant} 
+          />
+        </div>
       </div>
 
       <div className="flex-1 w-full max-w-4xl min-h-0">

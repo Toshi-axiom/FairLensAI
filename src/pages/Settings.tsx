@@ -83,7 +83,7 @@ export const Settings = () => {
                   </div>
                   <button 
                     onClick={() => setTwoFactorEnabled(!twoFactorEnabled)}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${twoFactorEnabled ? 'bg-neon-cyan' : 'bg-slate-600'}`}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors shrink-0 ${twoFactorEnabled ? 'bg-neon-cyan' : 'bg-slate-600'}`}
                   >
                     <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${twoFactorEnabled ? 'translate-x-6' : 'translate-x-1'}`} />
                   </button>
@@ -107,7 +107,7 @@ export const Settings = () => {
                 </div>
                 <button 
                   onClick={toggleTheme}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${darkMode ? 'bg-neon-violet' : 'bg-slate-600'}`}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors shrink-0 ${darkMode ? 'bg-neon-violet' : 'bg-slate-600'}`}
                 >
                   <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${darkMode ? 'translate-x-6' : 'translate-x-1'}`} />
                 </button>
@@ -173,7 +173,7 @@ export const Settings = () => {
                     <p className="text-sm text-secondary">Receive daily anomaly reports.</p>
                   </div>
                 </div>
-                <button className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors bg-neon-blue`}>
+                <button className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors bg-neon-blue`}>
                   <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-6`} />
                 </button>
               </div>

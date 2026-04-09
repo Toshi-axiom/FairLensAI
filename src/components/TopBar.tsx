@@ -27,7 +27,7 @@ export const TopBar = ({ toggleMobileMenu }: { toggleMobileMenu?: () => void }) 
 
   return (
     <div className="h-20 border-b border-border bg-dark-900/50 backdrop-blur-xl flex items-center justify-between px-4 md:px-8 relative z-40">
-      <div className="flex items-center gap-4 w-full md:w-96 relative group mr-4">
+      <div className="flex items-center gap-4 flex-1 md:flex-none md:w-96 relative group mr-4">
         {toggleMobileMenu && (
           <button onClick={toggleMobileMenu} className="md:hidden text-tertiary hover:text-primary transition-colors shrink-0">
             <Menu size={24} />
@@ -87,8 +87,8 @@ export const TopBar = ({ toggleMobileMenu }: { toggleMobileMenu?: () => void }) 
             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-neon-blue to-neon-violet flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.3)]">
               <User size={16} className="text-white" />
             </div>
-            <div className="text-sm font-medium text-primary">{user?.name}</div>
-            <ChevronDown size={14} className="text-tertiary" />
+            <div className="hidden md:block text-sm font-medium text-primary">{user?.name}</div>
+            <ChevronDown size={14} className="hidden md:block text-tertiary" />
           </button>
 
           <AnimatePresence>
