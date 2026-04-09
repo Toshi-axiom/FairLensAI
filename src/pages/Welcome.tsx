@@ -76,7 +76,7 @@ export const Welcome = () => {
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.1 }}
-            className="text-6xl md:text-8xl font-display font-black mb-8 tracking-tighter text-primary mt-12 relative drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+            className="text-5xl md:text-8xl font-display font-black mb-8 tracking-tighter text-primary mt-12 relative drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
           >
             Uncover Bias with <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-violet [text-shadow:0_0_40px_rgba(59,130,246,0.3)]">

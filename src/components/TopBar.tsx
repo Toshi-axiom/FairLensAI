@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, Bell, User, ChevronDown, LogOut, Settings as SettingsIcon } from 'lucide-react';
+import { Search, Bell, User, ChevronDown, LogOut, Settings as SettingsIcon, Menu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
-export const TopBar = () => {
+export const TopBar = ({ toggleMobileMenu }: { toggleMobileMenu?: () => void }) => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [showProfile, setShowProfile] = useState(false);
@@ -26,14 +26,21 @@ export const TopBar = () => {
   }, []);
 
   return (
-    <div className="h-20 border-b border-border bg-dark-900/50 backdrop-blur-xl flex items-center justify-between px-8 relative z-50">
-      <div className="w-96 relative group">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-tertiary group-focus-within:text-neon-cyan transition-colors" size={18} />
-        <input 
-          type="text" 
-          placeholder="Search models, dataset definitions, or anomalies..."
-          className="w-full bg-dark-800/50 flex-1 border border-border rounded-lg py-2 pl-10 pr-4 text-sm text-primary placeholder-tertiary focus:outline-none focus:border-neon-cyan/50 focus:shadow-[inset_0_0_10px_rgba(34,211,238,0.1),_0_0_10px_rgba(34,211,238,0.2)] transition-all"
-        />
+    <div className="h-20 border-b border-border bg-dark-900/50 backdrop-blur-xl flex items-center justify-between px-4 md:px-8 relative z-40">
+      <div className="flex items-center gap-4 w-full md:w-96 relative group mr-4">
+        {toggleMobileMenu && (
+          <button onClick={toggleMobileMenu} className="md:hidden text-tertiary hover:text-primary transition-colors shrink-0">
+            <Menu size={24} />
+          </button>
+        )}
+        <div className="relative flex-1 hidden sm:block">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-tertiary group-focus-within:text-[var(--neon-primary)] transition-colors" size={18} />
+          <input 
+            type="text" 
+            placeholder="Search models, dataset definitions, or anomalies..."
+            className="w-full bg-dark-800/50 flex-1 border border-border rounded-lg py-2 pl-10 pr-4 text-sm text-primary placeholder-tertiary focus:outline-none focus:border-[var(--neon-primary)]/50 focus:shadow-[inset_0_0_10px_rgba(var(--neon-primary),0.1),_0_0_10px_rgba(var(--neon-primary),0.2)] transition-all"
+          />
+        </div>
       </div>
 
       <div className="flex items-center gap-6">
