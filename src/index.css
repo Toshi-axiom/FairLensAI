@@ -19,7 +19,13 @@
     --glass-bg: rgba(255,255,255,0.7);
     --glass-border: rgba(0,0,0,0.05);
     --glass-shadow: rgba(0,0,0,0.05);
+    --neon-primary: var(--neon-cyan);
   }
+
+  :root[data-accent="cyan"] { --neon-primary: var(--neon-cyan); }
+  :root[data-accent="violet"] { --neon-primary: var(--neon-violet); }
+  :root[data-accent="blue"] { --neon-primary: var(--neon-blue); }
+  :root[data-accent="emerald"] { --neon-primary: #10B981; }
 
   .dark {
     --bg-900: #0A0A0F;
@@ -36,6 +42,8 @@
     --glass-border: rgba(255,255,255,0.05);
     --glass-shadow: rgba(0,0,0,0.5);
   }
+
+  .dark[data-accent="emerald"] { --neon-primary: #34D399; }
 
   body {
     @apply font-sans antialiased overflow-x-hidden selection:bg-neon-blue selection:text-white min-h-screen transition-colors duration-500;

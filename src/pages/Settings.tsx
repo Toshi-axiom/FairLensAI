@@ -3,11 +3,12 @@ import { GlassCard } from '../components/GlassCard';
 import { Shield, Moon, Key, Smartphone, User, Bell } from 'lucide-react';
 import { NeonButton } from '../components/NeonButton';
 import { useTheme } from '../contexts/ThemeContext';
+import type { AccentColor } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
 
 export const Settings = () => {
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, accent, setAccent } = useTheme();
   const darkMode = theme === 'dark';
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('Security');
@@ -29,7 +30,7 @@ export const Settings = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         <GlassCard accent="none" className="md:col-span-1 p-4 h-fit">
           <nav className="space-y-2">
-            {tabs.map((tab, idx) => (
+            {tabs.map((tab) => (
               <button
                 key={tab.name}
                 onClick={() => setActiveTab(tab.name)}
@@ -92,6 +93,7 @@ export const Settings = () => {
           )}
 
           {activeTab === 'Appearance' && (
+            <div className="space-y-6">
             <GlassCard accent="violet" className="p-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
@@ -111,6 +113,31 @@ export const Settings = () => {
                 </button>
               </div>
             </GlassCard>
+
+            <GlassCard accent="cyan" className="p-6">
+              <div className="flex flex-col gap-6">
+                <div>
+                  <h3 className="font-display font-bold text-xl text-primary">System Accent Color</h3>
+                  <p className="text-sm text-secondary">Choose the global highlight color for the FairLens engine.</p>
+                </div>
+                <div className="flex gap-4">
+                  {(['cyan', 'violet', 'blue', 'emerald'] as AccentColor[]).map(color => (
+                    <button
+                      key={color}
+                      onClick={() => setAccent(color)}
+                      className={`w-12 h-12 rounded-xl transition-all flex items-center justify-center
+                        ${color === 'cyan' ? 'bg-[#0891B2] dark:bg-[#22D3EE]' : ''}
+                        ${color === 'violet' ? 'bg-[#7C3AED] dark:bg-[#8B5CF6]' : ''}
+                        ${color === 'blue' ? 'bg-[#2563EB] dark:bg-[#3B82F6]' : ''}
+                        ${color === 'emerald' ? 'bg-[#10B981] dark:bg-[#34D399]' : ''}
+                        ${accent === color ? 'scale-110 shadow-[0_0_20px_currentColor] border-2 border-white' : 'opacity-50 hover:opacity-100'}
+                      `}
+                    />
+                  ))}
+                </div>
+              </div>
+            </GlassCard>
+            </div>
           )}
 
           {activeTab === 'Profile' && (

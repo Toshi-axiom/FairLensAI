@@ -111,6 +111,72 @@ export const Welcome = () => {
         </div>
       </section>
 
+      {/* Abstract Dashboard Visualization */}
+      <section className="relative z-10 flex justify-center pb-32 px-6 mt-[-10vh] pointer-events-none">
+        <motion.div 
+          style={{ y: useTransform(smoothScrollY, [0, 800], [50, -50]) }}
+          className="w-full max-w-5xl rounded-3xl border border-border/80 bg-dark-800/40 backdrop-blur-2xl p-6 shadow-[0_30px_100px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.1)] overflow-hidden"
+        >
+          {/* Mac window dots */}
+          <div className="flex gap-2 mb-8 ml-2">
+             <div className="w-3 h-3 rounded-full bg-rose-500/80 shadow-[0_0_10px_rgba(244,63,94,0.5)]" />
+             <div className="w-3 h-3 rounded-full bg-amber-500/80 shadow-[0_0_10px_rgba(245,158,11,0.5)]" />
+             <div className="w-3 h-3 rounded-full bg-emerald-500/80 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+             {/* Graph Mock 1 */}
+             <div className="col-span-1 md:col-span-2 h-72 rounded-2xl bg-black/40 border border-white/5 relative overflow-hidden p-6 flex flex-col justify-end">
+                <div className="absolute top-6 left-6 z-10">
+                   <div className="text-white/40 text-sm font-medium mb-1 tracking-wider uppercase">Disparate Impact Ratio</div>
+                   <div className="text-4xl font-display font-medium text-white flex items-end gap-3">
+                     0.86 <span className="text-emerald-400 text-lg mb-1 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">Fair</span>
+                   </div>
+                </div>
+                {/* Embedded SVG Graph */}
+                <svg className="w-full h-40 overflow-visible absolute bottom-0 left-0 pointer-events-none" viewBox="0 0 400 100" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="gradientLine" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.2"/>
+                      <stop offset="50%" stopColor="#3b82f6" stopOpacity="1"/>
+                      <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.8"/>
+                    </linearGradient>
+                    <linearGradient id="gradientFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.2"/>
+                      <stop offset="100%" stopColor="#3b82f6" stopOpacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M0,80 Q50,20 100,50 T200,30 T300,60 T400,20 L400,100 L0,100 Z" fill="url(#gradientFill)" />
+                  <path d="M0,80 Q50,20 100,50 T200,30 T300,60 T400,20" fill="none" stroke="url(#gradientLine)" strokeWidth="3" className="drop-shadow-[0_0_15px_rgba(59,130,246,0.6)]" />
+                  
+                  {/* Glowing data points */}
+                  <circle cx="100" cy="50" r="5" fill="#fff" className="drop-shadow-[0_0_10px_#fff]" />
+                  <circle cx="200" cy="30" r="5" fill="#fff" className="drop-shadow-[0_0_10px_#fff]" />
+                  <circle cx="300" cy="60" r="5" fill="#fff" className="drop-shadow-[0_0_10px_#fff]" />
+                </svg>
+             </div>
+
+             {/* Graph Mock 2 */}
+             <div className="col-span-1 h-72 rounded-2xl bg-black/40 border border-white/5 relative p-6 flex flex-col items-center justify-center">
+                <div className="absolute top-6 left-6">
+                   <div className="text-white/40 text-sm font-medium mb-1 tracking-wider uppercase">Protected Class</div>
+                </div>
+                {/* Circular indicator mock */}
+                <div className="relative w-40 h-40 mt-6 flex items-center justify-center">
+                  <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#ffffff0a" strokeWidth="6"/>
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#8b5cf6" strokeWidth="6" strokeDasharray="283" strokeDashoffset="40" className="drop-shadow-[0_0_15px_rgba(139,92,246,0.8)]"/>
+                  </svg>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-white text-4xl font-display font-medium">85%</span>
+                    <span className="text-white/40 text-xs tracking-widest uppercase mt-1">Parity</span>
+                  </div>
+                </div>
+             </div>
+          </div>
+        </motion.div>
+      </section>
+
       {/* Floating 3D Cards Section */}
       <section className="min-h-screen py-24 px-6 z-10 flex items-center justify-center relative">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
@@ -137,6 +203,32 @@ export const Welcome = () => {
               <p className="text-secondary text-base leading-relaxed">Engage directly with the contextual Chat Assistant to rewrite biased parameters into actionable fairness logic.</p>
             </GlassCard>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-24 px-6 relative z-10 border-t border-border bg-gradient-to-b from-black/40 to-dark-900/40">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+          {[
+            { label: 'Models Monitored', value: '10M+', color: 'text-neon-cyan', shadow: 'drop-shadow-[0_0_20px_rgba(34,211,238,0.5)]' },
+            { label: 'Biases Mitigated', value: '8.4B', color: 'text-neon-violet', shadow: 'drop-shadow-[0_0_20px_rgba(139,92,246,0.5)]' },
+            { label: 'Uptime', value: '99.9%', color: 'text-neon-blue', shadow: 'drop-shadow-[0_0_20px_rgba(59,130,246,0.5)]' },
+            { label: 'Enterprise Teams', value: '400+', color: 'text-emerald-400', shadow: 'drop-shadow-[0_0_20px_rgba(52,211,153,0.5)]' },
+          ].map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, type: 'spring' }}
+              className="text-center p-8 border border-border/50 rounded-2xl bg-dark-800/30 backdrop-blur-sm hover:bg-dark-800/80 transition-colors"
+            >
+              <h4 className={`text-4xl md:text-5xl font-display font-black mb-3 ${stat.color} ${stat.shadow}`}>
+                {stat.value}
+              </h4>
+              <p className="text-secondary tracking-wide uppercase text-sm font-semibold">{stat.label}</p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
@@ -194,6 +286,38 @@ export const Welcome = () => {
         </div>
       </section>
 
+      {/* Integrations Marquee */}
+      <section className="py-20 overflow-hidden relative z-10 border-y border-border bg-black/40">
+        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-dark-900 to-transparent z-20 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-dark-900 to-transparent z-20 pointer-events-none" />
+        
+        <div className="text-center mb-10 z-10 relative">
+          <h3 className="text-sm font-display tracking-[0.2em] text-secondary uppercase">Seamlessly integrates with your ecosystem</h3>
+        </div>
+
+        <div className="flex gap-12 text-secondary/40 font-display font-bold text-3xl whitespace-nowrap items-center">
+           <motion.div
+            animate={{ x: [0, -1000] }}
+            transition={{ repeat: Infinity, ease: 'linear', duration: 20 }}
+            className="flex gap-24 items-center"
+          >
+             {['PyTorch', 'TensorFlow', 'Scikit-Learn', 'HuggingFace', 'Pandas', 'Apache Spark', 'AWS SageMaker', 'Google Cloud AI'].map((tech) => (
+               <div key={tech} className="flex items-center gap-4 hover:text-white transition-colors duration-300">
+                 <div className="w-4 h-4 rounded-full bg-neon-cyan/50 shadow-[0_0_15px_rgba(34,211,238,0.6)]" />
+                 {tech}
+               </div>
+             ))}
+             {/* Duplicate for infinite effect */}
+             {['PyTorch', 'TensorFlow', 'Scikit-Learn', 'HuggingFace', 'Pandas', 'Apache Spark', 'AWS SageMaker', 'Google Cloud AI'].map((tech, i) => (
+               <div key={`dup-${i}`} className="flex items-center gap-4 hover:text-white transition-colors duration-300">
+                 <div className="w-4 h-4 rounded-full bg-neon-cyan/50 shadow-[0_0_15px_rgba(34,211,238,0.6)]" />
+                 {tech}
+               </div>
+             ))}
+          </motion.div>
+        </div>
+      </section>
+
       {/* Why FairLens */}
       <section className="min-h-screen py-24 px-6 z-10 flex items-center justify-center relative">
         <div className="max-w-6xl w-full">
@@ -228,6 +352,24 @@ export const Welcome = () => {
                   <h4 className="font-display font-bold text-2xl mb-2 text-primary">Protect Groups</h4>
                   <p className="text-secondary text-base">Highlight and mitigate statistical biases that disproportionately affect underrepresented demographics.</p>
                 </div>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="pt-12 mt-12 border-t border-border flex flex-col items-center text-center"
+              >
+                <h3 className="text-3xl font-display font-bold text-primary mb-4">Ready to build fairer AI?</h3>
+                <p className="text-secondary mb-8 max-w-lg">
+                  Sign in to access your dashboard and start auditing your models.
+                </p>
+                <NeonButton 
+                  variant="violet" 
+                  label="Sign In Now" 
+                  onClick={() => navigate('/auth', { state: { isSignup: false } })} 
+                  className="px-10 py-4 text-xl shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:shadow-[0_0_60px_rgba(139,92,246,0.6)]"
+                />
               </motion.div>
             </div>
           </motion.div>

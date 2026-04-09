@@ -1,10 +1,12 @@
-import React, { ReactNode, MouseEvent } from 'react';
-import { motion, HTMLMotionProps, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React from 'react';
+import type { ReactNode, MouseEvent } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
-interface GlassCardProps extends HTMLMotionProps<"div"> {
+interface GlassCardProps extends React.ComponentProps<typeof motion.div> {
   children: ReactNode;
   className?: string;
   accent?: 'blue' | 'cyan' | 'violet' | 'none';
+  hoverable?: boolean;
 }
 
 export const GlassCard = ({ children, className = '', accent = 'none', ...props }: GlassCardProps) => {

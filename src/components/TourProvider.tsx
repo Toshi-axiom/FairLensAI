@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Joyride, STATUS } from 'react-joyride';
-import type { Step, CallBackProps } from 'react-joyride';
+import * as JoyrideModule from 'react-joyride';
+import type { Step } from 'react-joyride';
+
+const Joyride = (JoyrideModule as any).default || (JoyrideModule as any).Joyride || JoyrideModule;
+const STATUS = JoyrideModule.STATUS;
 import { useTheme } from '../contexts/ThemeContext';
 
 export const TourProvider = () => {
@@ -20,7 +23,7 @@ export const TourProvider = () => {
       content: 'Welcome to FairLens AI! This main view provides a high-level overview of system fairness.',
       placement: 'center',
       disableBeacon: true,
-    },
+    } as any,
     {
       target: '.tour-step-2',
       content: 'Critical Anomalies instantly alert you to demographic groups experiencing disparate impact.',
@@ -33,7 +36,7 @@ export const TourProvider = () => {
     }
   ];
 
-  const handleJoyrideCallback = (data: CallBackProps) => {
+  const handleJoyrideCallback = (data: any) => {
     const { status } = data;
     const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
     
@@ -54,26 +57,51 @@ export const TourProvider = () => {
       callback={handleJoyrideCallback}
       styles={{
         options: {
-          arrowColor: theme === 'dark' ? '#1E293B' : '#FFFFFF',
-          backgroundColor: theme === 'dark' ? '#1E293B' : '#FFFFFF',
-          overlayColor: 'rgba(0, 0, 0, 0.6)',
-          primaryColor: '#3B82F6',
-          textColor: theme === 'dark' ? '#F8FAFC' : '#0F172A',
+          arrowColor: 'rgba(30, 41, 59, 1)',
+          backgroundColor: 'rgba(30, 41, 59, 1)',
+          overlayColor: 'rgba(0, 0, 0, 0.7)',
+          primaryColor: 'var(--neon-cyan)',
+          textColor: '#F8FAFC',
           zIndex: 10000,
         },
+        tooltip: {
+          background: 'rgba(15, 23, 42, 0.95)',
+          color: '#F8FAFC',
+          backdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          boxShadow: '0 0 30px rgba(0, 0, 0, 0.8), 0 0 10px rgba(34, 211, 238, 0.2)',
+          borderRadius: '16px',
+          padding: '24px',
+        },
         tooltipContainer: {
-          textAlign: 'left',
+          textAlign: 'left' as const,
           fontFamily: '"Exo 2", sans-serif',
+          color: '#F8FAFC',
+        },
+        tooltipContent: {
+          color: '#e2e8f0',
+          padding: '10px 0',
+        },
+        tooltipTitle: {
+          color: '#ffffff',
+          fontWeight: 'bold',
         },
         buttonNext: {
           fontFamily: '"Chakra Petch", sans-serif',
           fontWeight: 600,
-          borderRadius: 8,
+          borderRadius: '8px',
+          backgroundColor: 'var(--neon-primary, #0891B2)',
+          padding: '8px 16px',
         },
         buttonBack: {
-          color: theme === 'dark' ? '#94A3B8' : '#475569',
+          color: '#94A3B8',
+          marginRight: '10px',
+        },
+        buttonSkip: {
+          color: '#64748B',
+          fontSize: '12px',
         }
-      }}
+      } as any}
     />
   );
 };

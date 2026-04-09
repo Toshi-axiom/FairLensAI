@@ -13,9 +13,9 @@ export const Sidebar = () => {
   return (
     <div className="w-64 h-screen max-w-[250px] glass-panel border-r border-border flex flex-col pt-6 z-20">
       <div className="px-6 mb-12 flex items-center gap-3">
-        <ShieldAlert className="text-neon-cyan" size={28} />
+        <ShieldAlert className="text-[var(--neon-primary)]" size={28} />
         <h1 className="font-display font-bold text-2xl tracking-wider text-primary">
-          FAIR<span className="text-neon-cyan">LENS</span>
+          FAIR<span className="text-[var(--neon-primary)]">LENS</span>
         </h1>
       </div>
 
@@ -27,7 +27,7 @@ export const Sidebar = () => {
             className={({ isActive }) =>
               `flex items-center gap-4 px-4 py-3 rounded-lg transition-all duration-300 ${
                 isActive
-                  ? 'bg-neon-cyan/10 text-neon-cyan border border-neon-cyan/20 shadow-[inset_0_0_10px_rgba(34,211,238,0.2)]'
+                  ? 'bg-[var(--neon-primary)]/10 text-[var(--neon-primary)] border border-[var(--neon-primary)]/20 shadow-[inset_0_0_10px_rgba(var(--neon-primary),0.2)]'
                   : 'text-tertiary hover:text-primary hover:bg-dark-700/50'
               }`
             }
@@ -41,7 +41,7 @@ export const Sidebar = () => {
       <div className="p-6">
         <div className="text-xs text-tertiary font-display">SYSTEM STATUS</div>
         <div className="flex items-center gap-2 mt-2">
-          <div className="w-2 h-2 rounded-full bg-neon-cyan animate-pulse"></div>
+          <div className="w-2 h-2 rounded-full bg-[var(--neon-primary)] animate-pulse"></div>
           <span className="text-sm text-secondary">AI Engine Online</span>
         </div>
       </div>

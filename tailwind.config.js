@@ -21,6 +21,7 @@ export default {
           blue: 'var(--neon-blue)',
           violet: 'var(--neon-violet)',
           cyan: 'var(--neon-cyan)',
+          primary: 'var(--neon-primary)',
         }
       },
       fontFamily: {
