@@ -7,6 +7,7 @@ import { ShieldAlert, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 import { FcGoogle } from 'react-icons/fc';
 import zxcvbn from 'zxcvbn';
 import { useAuth } from '../contexts/AuthContext';
+import authBg from '../assets/auth-bg.png';
 
 export const Auth = () => {
   const navigate = useNavigate();
@@ -73,10 +74,24 @@ export const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden text-primary w-screen">
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden text-primary w-screen bg-dark-900">
+      {/* Generated Background Image */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-40 mix-blend-lighten"
+        style={{ backgroundImage: `url(${authBg})` }}
+      />
+      
+      {/* Overlay Gradient for depth and readability */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-dark-900/80 via-transparent to-dark-900/80 pointer-events-none" />
+
+      {/* Grid Canvas Overlay */}
+      <div 
+        className="absolute inset-0 z-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPjxwb2x5Z29uIHBvaW50cz0iNDAgMCAwIDAgMCA0MCIvPjwvZz48L3N2Zz4=')] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)] pointer-events-none opacity-30"
+      />
+
       {/* Abstract Background Elements */}
-      <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-neon-violet/20 rounded-full blur-[150px] pointer-events-none animate-blob z-0" />
-      <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-neon-cyan/20 rounded-full blur-[150px] pointer-events-none animate-blob z-0" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-neon-violet/20 rounded-full blur-[150px] pointer-events-none animate-blob z-0 mix-blend-screen" />
+      <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-neon-cyan/20 rounded-full blur-[150px] pointer-events-none animate-blob z-0 mix-blend-screen" style={{ animationDelay: '2s' }} />
 
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
