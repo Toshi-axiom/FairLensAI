@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import Particles, { initParticlesEngine } from '@tsparticles/react';
+import { loadFull } from 'tsparticles';
 import { GlassCard } from '../components/GlassCard';
 import { NeonButton } from '../components/NeonButton';
 import { ShieldAlert, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
@@ -19,6 +21,15 @@ export const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [particlesInit, setParticlesInit] = useState(false);
+
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadFull(engine);
+    }).then(() => {
+      setParticlesInit(true);
+    });
+  }, []);
 
   const passwordScore = zxcvbn(password).score; // 0 to 4
   const getStrengthMeta = () => {
@@ -88,6 +99,51 @@ export const Auth = () => {
       <div 
         className="absolute inset-0 z-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPjxwb2x5Z29uIHBvaW50cz0iNDAgMCAwIDAgMCA0MCIvPjwvZz48L3N2Zz4=')] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)] pointer-events-none opacity-30"
       />
+
+      {/* Interactive Neural Network Particles */}
+      {particlesInit && (
+        <Particles
+          id="tsparticles"
+          className="absolute inset-0 z-0 mix-blend-screen"
+          options={{
+            background: { color: { value: "transparent" } },
+            fpsLimit: 60,
+            interactivity: {
+              events: {
+                onHover: { enable: true, mode: "grab" },
+                onClick: { enable: true, mode: "push" },
+              },
+              modes: {
+                grab: { distance: 180, links: { opacity: 0.8, color: "#22d3ee" } },
+                push: { quantity: 3 },
+              },
+            },
+            particles: {
+              color: { value: ["#22d3ee", "#8b5cf6"] },
+              links: {
+                color: "#8b5cf6",
+                distance: 150,
+                enable: true,
+                opacity: 0.3,
+                width: 1,
+              },
+              move: {
+                direction: "none",
+                enable: true,
+                outModes: { default: "bounce" },
+                random: true,
+                speed: 0.8,
+                straight: false,
+              },
+              number: { density: { enable: true, height: 800, width: 800 }, value: 80 },
+              opacity: { value: 0.6 },
+              shape: { type: "circle" },
+              size: { value: { min: 1, max: 3 } },
+            },
+            detectRetina: true,
+          }}
+        />
+      )}
 
       {/* Abstract Background Elements */}
       <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-neon-violet/20 rounded-full blur-[150px] pointer-events-none animate-blob z-0 mix-blend-screen" />
