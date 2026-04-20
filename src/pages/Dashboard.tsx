@@ -100,7 +100,7 @@ export const Dashboard = () => {
               <p className="text-tertiary text-[10px] md:text-xs font-display uppercase tracking-widest mb-2 truncate">Protected Orgs</p>
               <h3 className="text-2xl md:text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : '8'}</h3>
             </div>
-            <div className="p-3 shrink-0 bg-dark-800 rounded-xl border border-border text-secondary">
+            <div className="p-3 shrink-0 bg-dark-800 rounded-xl border border-emerald-500/30 text-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.2)]">
               <ShieldCheck size={24} />
             </div>
           </div>
