@@ -10,17 +10,16 @@ import { FcGoogle } from 'react-icons/fc';
 import zxcvbn from 'zxcvbn';
 import { useAuth } from '../contexts/AuthContext';
 
-export const Auth = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { login } = useAuth();
-  const [isLogin, setIsLogin] = useState(!location.state?.isSignup);
-  const [authError, setAuthError] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [particlesInit, setParticlesInit] = useState(false);
+const AuthBackground = React.memo(() => {
+  const [init, setInit] = useState(false);
+
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadFull(engine);
+    }).then(() => {
+      setInit(true);
+    });
+  }, []);
 
   const particlesOptions = useMemo(() => ({
     background: { color: { value: "transparent" } },
@@ -60,13 +59,27 @@ export const Auth = () => {
     detectRetina: true,
   }), []);
 
-  useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadFull(engine);
-    }).then(() => {
-      setParticlesInit(true);
-    });
-  }, []);
+  if (!init) return null;
+
+  return (
+    <Particles
+      id="tsparticles"
+      className="absolute inset-0 z-0 mix-blend-screen"
+      options={particlesOptions}
+    />
+  );
+});
+
+export const Auth = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
+  const [isLogin, setIsLogin] = useState(!location.state?.isSignup);
+  const [authError, setAuthError] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
 
   const passwordScore = zxcvbn(password).score; // 0 to 4
   const getStrengthMeta = () => {
@@ -133,13 +146,7 @@ export const Auth = () => {
       />
 
       {/* Interactive Neural Network Particles */}
-      {particlesInit && (
-        <Particles
-          id="tsparticles"
-          className="absolute inset-0 z-0 mix-blend-screen"
-          options={particlesOptions}
-        />
-      )}
+      <AuthBackground />
 
       {/* Abstract Background Elements */}
       <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-neon-violet/20 rounded-full blur-[150px] pointer-events-none animate-blob z-0 mix-blend-screen" />
