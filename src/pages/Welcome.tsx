@@ -48,7 +48,7 @@ export const Welcome = () => {
   const gridOpacity = useTransform(smoothScrollY, [0, 500], [0.5, 0.1]);
 
   return (
-    <div ref={containerRef} className="min-h-[250vh] bg-dark-900 flex flex-col relative overflow-hidden text-primary w-screen transition-colors duration-500 perspective-[1000px]">
+    <div ref={containerRef} className="min-h-[250vh] bg-dark-900 flex flex-col relative overflow-hidden text-primary w-full transition-colors duration-500 perspective-[1000px]">
       
       {/* Interactive Neural Network Particles */}
       {particlesInit && (
@@ -132,7 +132,7 @@ export const Welcome = () => {
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.1 }}
-            className="text-5xl md:text-8xl font-display font-black mb-8 tracking-tighter text-primary mt-12 relative drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+            className="text-4xl sm:text-5xl md:text-8xl font-display font-black mb-8 tracking-tighter text-primary mt-12 relative drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
           >
             Uncover Bias with <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-violet [text-shadow:0_0_40px_rgba(59,130,246,0.3)]">
@@ -182,11 +182,11 @@ export const Welcome = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
              {/* Graph Mock 1 */}
-             <div className="col-span-1 md:col-span-2 h-72 rounded-2xl bg-black/40 border border-white/5 relative overflow-hidden p-6 flex flex-col justify-end">
+               <div className="col-span-1 md:col-span-2 h-auto min-h-[16rem] rounded-2xl bg-black/40 border border-white/5 relative overflow-hidden p-6 flex flex-col justify-end">
                 <div className="absolute top-6 left-6 z-10">
-                   <div className="text-white/40 text-sm font-medium mb-1 tracking-wider uppercase">Disparate Impact Ratio</div>
-                   <div className="text-4xl font-display font-medium text-white flex items-end gap-3">
-                     0.86 <span className="text-emerald-400 text-lg mb-1 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">Fair</span>
+                   <div className="text-white/40 text-xs md:text-sm font-medium mb-1 tracking-wider uppercase">Disparate Impact Ratio</div>
+                   <div className="text-3xl md:text-4xl font-display font-medium text-white flex items-end gap-3">
+                     0.86 <span className="text-emerald-400 text-base md:text-lg mb-1 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">Fair</span>
                    </div>
                 </div>
                 {/* Embedded SVG Graph */}

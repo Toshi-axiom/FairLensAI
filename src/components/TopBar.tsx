@@ -59,7 +59,7 @@ export const TopBar = ({ toggleMobileMenu }: { toggleMobileMenu?: () => void }) 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                className="absolute right-0 mt-4 w-80 glass-panel rounded-xl shadow-2xl overflow-hidden py-2"
+                className="absolute right-[-10px] sm:right-0 mt-4 w-[90vw] sm:w-80 bg-dark-900/95 backdrop-blur-2xl border border-white/10 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden py-2"
               >
                 <div className="px-4 py-2 border-b border-border">
                   <h3 className="font-display font-semibold text-primary">Notifications</h3>
@@ -97,7 +97,7 @@ export const TopBar = ({ toggleMobileMenu }: { toggleMobileMenu?: () => void }) 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                className="absolute right-0 mt-4 w-48 glass-panel rounded-xl shadow-2xl py-2"
+                className="absolute right-[-10px] sm:right-0 mt-4 w-48 bg-dark-900/95 backdrop-blur-2xl border border-white/10 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] py-2"
               >
                 <div className="px-4 py-2 border-b border-border mb-2">
                   <p className="text-sm font-medium text-primary">{user?.name}</p>

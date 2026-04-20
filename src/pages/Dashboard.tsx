@@ -59,48 +59,48 @@ export const Dashboard = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <GlassCard accent="cyan" hoverable>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-tertiary text-xs font-display uppercase tracking-widest mb-2">Active Datasets</p>
-              <h3 className="text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : '14'}</h3>
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <p className="text-tertiary text-[10px] md:text-xs font-display uppercase tracking-widest mb-2 truncate">Active Datasets</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : '14'}</h3>
             </div>
-            <div className="p-3 bg-dark-800 rounded-xl border border-neon-cyan/30 text-neon-cyan shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+            <div className="p-3 shrink-0 bg-dark-800 rounded-xl border border-neon-cyan/30 text-neon-cyan shadow-[0_0_20px_rgba(34,211,238,0.2)]">
               <Database size={24} />
             </div>
           </div>
         </GlassCard>
 
         <GlassCard accent="violet" hoverable className="tour-step-2">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-tertiary text-xs font-display uppercase tracking-widest mb-2">Anomalies Detected</p>
-              <h3 className="text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : '3'}</h3>
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <p className="text-tertiary text-[10px] md:text-xs font-display uppercase tracking-widest mb-2 truncate">Anomalies Detected</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : '3'}</h3>
             </div>
-            <div className="p-3 bg-dark-800 rounded-xl border border-neon-violet/30 text-neon-violet shadow-[0_0_20px_rgba(139,92,246,0.2)]">
+            <div className="p-3 shrink-0 bg-dark-800 rounded-xl border border-neon-violet/30 text-neon-violet shadow-[0_0_20px_rgba(139,92,246,0.2)]">
               <AlertTriangle size={24} />
             </div>
           </div>
         </GlassCard>
 
         <GlassCard accent="blue" hoverable>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-tertiary text-xs font-display uppercase tracking-widest mb-2">Global Fairness</p>
-              <h3 className="text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : '94'}<span className="text-lg text-tertiary">%</span></h3>
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <p className="text-tertiary text-[10px] md:text-xs font-display uppercase tracking-widest mb-2 truncate">Global Fairness</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : '94'}<span className="text-base md:text-lg text-tertiary">%</span></h3>
             </div>
-            <div className="p-3 bg-dark-800 rounded-xl border border-neon-blue/30 text-neon-blue shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+            <div className="p-3 shrink-0 bg-dark-800 rounded-xl border border-neon-blue/30 text-neon-blue shadow-[0_0_20px_rgba(59,130,246,0.2)]">
               <Activity size={24} />
             </div>
           </div>
         </GlassCard>
 
         <GlassCard accent="none" hoverable>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-tertiary text-xs font-display uppercase tracking-widest mb-2">Protected Orgs</p>
-              <h3 className="text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : '8'}</h3>
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <p className="text-tertiary text-[10px] md:text-xs font-display uppercase tracking-widest mb-2 truncate">Protected Orgs</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : '8'}</h3>
             </div>
-            <div className="p-3 bg-dark-800 rounded-xl border border-border text-secondary">
+            <div className="p-3 shrink-0 bg-dark-800 rounded-xl border border-border text-secondary">
               <ShieldCheck size={24} />
             </div>
           </div>

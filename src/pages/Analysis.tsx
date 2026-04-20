@@ -8,7 +8,7 @@ export const Analysis = () => {
   const { openAssistant } = useAssistant();
 
   return (
-    <div className="flex flex-col h-[calc(100vh-140px)] space-y-4">
+    <div className="flex flex-col h-auto md:h-[calc(100vh-140px)] space-y-4">
       <div className="mb-2 shrink-0 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-3xl font-display font-bold text-primary mb-2 tracking-wide text-glow">Bias Analysis Engine</h2>
@@ -26,8 +26,8 @@ export const Analysis = () => {
 
       <div className="flex-1 w-full max-w-4xl min-h-0">
         {/* Bias Engine Pane */}
-        <GlassCard className="flex flex-col h-full overflow-hidden">
-          <div className="flex items-center justify-between mb-6 shrink-0 border-b border-border pb-4">
+        <GlassCard className="flex flex-col h-[600px] md:h-full overflow-hidden">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 shrink-0 border-b border-border pb-4">
             <h3 className="text-xl font-display font-semibold flex items-center gap-3">
               <BrainCircuit className="text-neon-cyan" size={24} /> Engine Outputs
             </h3>
@@ -45,9 +45,9 @@ export const Analysis = () => {
           <div className="flex-1 overflow-y-auto space-y-4 pr-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
             {/* Finding 1 */}
             <div className="p-6 rounded-2xl bg-dark-800/80 border border-border border-l-4 border-l-neon-violet hover:bg-dark-800 transition-colors shadow-lg">
-              <div className="flex items-start justify-between mb-3">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
                 <h4 className="font-medium text-lg text-primary">Gender Imbalance in "Applicant_Income"</h4>
-                <button onClick={openAssistant} className="flex items-center gap-2 text-xs font-semibold text-neon-violet hover:text-white transition-colors bg-neon-violet/10 px-3 py-1.5 rounded-lg border border-neon-violet/30">
+                <button onClick={openAssistant} className="flex self-start items-center gap-2 text-xs font-semibold text-neon-violet hover:text-white transition-colors bg-neon-violet/10 px-3 py-1.5 rounded-lg border border-neon-violet/30">
                   <Sparkles size={14} /> Mitigate
                 </button>
               </div>
@@ -60,9 +60,9 @@ export const Analysis = () => {
 
             {/* Finding 2 */}
             <div className="p-6 rounded-2xl bg-dark-800/80 border border-border border-l-4 border-l-neon-blue hover:bg-dark-800 transition-colors shadow-lg">
-              <div className="flex items-start justify-between mb-3">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
                 <h4 className="font-medium text-lg text-primary">Underrepresentation in Training Data</h4>
-                <button onClick={openAssistant} className="flex items-center gap-2 text-xs font-semibold text-neon-blue hover:text-white transition-colors bg-neon-blue/10 px-3 py-1.5 rounded-lg border border-neon-blue/30">
+                <button onClick={openAssistant} className="flex self-start items-center gap-2 text-xs font-semibold text-neon-blue hover:text-white transition-colors bg-neon-blue/10 px-3 py-1.5 rounded-lg border border-neon-blue/30">
                   <Sparkles size={14} /> Mitigate
                 </button>
               </div>
