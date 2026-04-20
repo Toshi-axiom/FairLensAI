@@ -58,7 +58,7 @@ export const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <GlassCard accent="cyan" hoverable>
+        <GlassCard accent="cyan" hoverable className="p-5 md:p-6">
           <div className="flex items-center justify-between gap-3">
             <div className="flex-1 min-w-0">
               <p className="text-tertiary text-[10px] md:text-xs font-display uppercase tracking-widest mb-2 truncate">Active Datasets</p>
@@ -70,7 +70,7 @@ export const Dashboard = () => {
           </div>
         </GlassCard>
 
-        <GlassCard accent="violet" hoverable className="tour-step-2">
+        <GlassCard accent="violet" hoverable className="p-5 md:p-6 tour-step-2">
           <div className="flex items-center justify-between gap-3">
             <div className="flex-1 min-w-0">
               <p className="text-tertiary text-[10px] md:text-xs font-display uppercase tracking-widest mb-2 truncate">Anomalies Detected</p>
@@ -82,7 +82,7 @@ export const Dashboard = () => {
           </div>
         </GlassCard>
 
-        <GlassCard accent="blue" hoverable>
+        <GlassCard accent="blue" hoverable className="p-5 md:p-6">
           <div className="flex items-center justify-between gap-3">
             <div className="flex-1 min-w-0">
               <p className="text-tertiary text-[10px] md:text-xs font-display uppercase tracking-widest mb-2 truncate">Global Fairness</p>
@@ -94,7 +94,7 @@ export const Dashboard = () => {
           </div>
         </GlassCard>
 
-        <GlassCard accent="none" hoverable>
+        <GlassCard accent="none" hoverable className="p-5 md:p-6">
           <div className="flex items-center justify-between gap-3">
             <div className="flex-1 min-w-0">
               <p className="text-tertiary text-[10px] md:text-xs font-display uppercase tracking-widest mb-2 truncate">Protected Orgs</p>

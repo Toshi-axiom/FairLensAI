@@ -60,6 +60,27 @@
     border: 1px solid var(--glass-border);
     box-shadow: 0 8px 32px var(--glass-shadow);
   }
+
+  .glass-panel-cyan {
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    box-shadow: 0 8px 32px rgba(34, 211, 238, 0.05);
+  }
+
+  .glass-panel-violet {
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    box-shadow: 0 8px 32px rgba(139, 92, 246, 0.05);
+  }
+
+  .glass-panel-blue {
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.05);
+  }
   
   .glass-panel-hover {
     @apply hover:border-border transition-all duration-300;
