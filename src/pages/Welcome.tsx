@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Particles, { initParticlesEngine } from '@tsparticles/react';
@@ -11,6 +11,44 @@ export const Welcome = () => {
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const [particlesInit, setParticlesInit] = useState(false);
+
+  const particlesOptions = useMemo(() => ({
+    background: { color: { value: "transparent" } },
+    fpsLimit: 60,
+    interactivity: {
+      events: {
+        onHover: { enable: true, mode: "grab" },
+        onClick: { enable: true, mode: "push" },
+      },
+      modes: {
+        grab: { distance: 180, links: { opacity: 0.8, color: "#22d3ee" } },
+        push: { quantity: 3 },
+      },
+    },
+    particles: {
+      color: { value: ["#22d3ee", "#8b5cf6"] },
+      links: {
+        color: "#8b5cf6",
+        distance: 150,
+        enable: true,
+        opacity: 0.3,
+        width: 1,
+      },
+      move: {
+        direction: "none" as const,
+        enable: true,
+        outModes: { default: "bounce" as const },
+        random: true,
+        speed: 0.8,
+        straight: false,
+      },
+      number: { density: { enable: true, height: 800, width: 800 }, value: 80 },
+      opacity: { value: 0.6 },
+      shape: { type: "circle" as const },
+      size: { value: { min: 1, max: 3 } },
+    },
+    detectRetina: true,
+  }), []);
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -55,43 +93,7 @@ export const Welcome = () => {
         <Particles
           id="tsparticles-welcome"
           className="fixed inset-0 z-0 mix-blend-screen"
-          options={{
-            background: { color: { value: "transparent" } },
-            fpsLimit: 60,
-            interactivity: {
-              events: {
-                onHover: { enable: true, mode: "grab" },
-                onClick: { enable: true, mode: "push" },
-              },
-              modes: {
-                grab: { distance: 180, links: { opacity: 0.8, color: "#22d3ee" } },
-                push: { quantity: 3 },
-              },
-            },
-            particles: {
-              color: { value: ["#22d3ee", "#8b5cf6"] },
-              links: {
-                color: "#8b5cf6",
-                distance: 150,
-                enable: true,
-                opacity: 0.3,
-                width: 1,
-              },
-              move: {
-                direction: "none",
-                enable: true,
-                outModes: { default: "bounce" },
-                random: true,
-                speed: 0.8,
-                straight: false,
-              },
-              number: { density: { enable: true, height: 800, width: 800 }, value: 80 },
-              opacity: { value: 0.6 },
-              shape: { type: "circle" },
-              size: { value: { min: 1, max: 3 } },
-            },
-            detectRetina: true,
-          }}
+          options={particlesOptions}
         />
       )}
 
