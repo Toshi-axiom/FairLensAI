@@ -26,7 +26,22 @@ export const TopBar = ({ toggleMobileMenu }: { toggleMobileMenu?: () => void }) 
   }, []);
 
   return (
-    <div className="h-20 border-b border-border bg-dark-900/50 backdrop-blur-xl flex items-center justify-between px-4 md:px-8 relative z-40">
+    <>
+      <AnimatePresence>
+        {(showProfile || showNotifications) && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-30 bg-dark-900/40 backdrop-blur-md cursor-pointer"
+            onClick={() => {
+              setShowProfile(false);
+              setShowNotifications(false);
+            }}
+          />
+        )}
+      </AnimatePresence>
+      <div className="h-20 border-b border-border bg-dark-900/50 backdrop-blur-xl flex items-center justify-between px-4 md:px-8 relative z-40">
       <div className="flex items-center gap-4 flex-1 md:flex-none md:w-96 relative group mr-4">
         {toggleMobileMenu && (
           <button onClick={toggleMobileMenu} className="md:hidden text-tertiary hover:text-primary transition-colors shrink-0">
@@ -59,7 +74,7 @@ export const TopBar = ({ toggleMobileMenu }: { toggleMobileMenu?: () => void }) 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                className="absolute right-[-10px] sm:right-0 mt-4 w-[90vw] sm:w-80 bg-dark-900/95 backdrop-blur-2xl border border-white/10 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden py-2"
+                className="absolute right-[-10px] sm:right-0 mt-4 w-[90vw] sm:w-80 bg-dark-800/40 backdrop-blur-2xl border border-white/10 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden py-2 z-50"
               >
                 <div className="px-4 py-2 border-b border-border">
                   <h3 className="font-display font-semibold text-primary">Notifications</h3>
@@ -97,7 +112,7 @@ export const TopBar = ({ toggleMobileMenu }: { toggleMobileMenu?: () => void }) 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                className="absolute right-[-10px] sm:right-0 mt-4 w-48 bg-dark-900/95 backdrop-blur-2xl border border-white/10 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] py-2"
+                className="absolute right-[-10px] sm:right-0 mt-4 w-48 bg-dark-800/40 backdrop-blur-2xl border border-white/10 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] py-2 z-50"
               >
                 <div className="px-4 py-2 border-b border-border mb-2">
                   <p className="text-sm font-medium text-primary">{user?.name}</p>
@@ -123,5 +138,6 @@ export const TopBar = ({ toggleMobileMenu }: { toggleMobileMenu?: () => void }) 
         </div>
       </div>
     </div>
+    </>
   );
 };
