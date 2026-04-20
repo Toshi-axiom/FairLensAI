@@ -9,7 +9,6 @@ import { ShieldAlert, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 import { FcGoogle } from 'react-icons/fc';
 import zxcvbn from 'zxcvbn';
 import { useAuth } from '../contexts/AuthContext';
-import authBg from '../assets/auth-bg.png';
 
 export const Auth = () => {
   const navigate = useNavigate();
@@ -86,11 +85,6 @@ export const Auth = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden text-primary w-screen bg-dark-900">
-      {/* Generated Background Image */}
-      <div 
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-40 mix-blend-lighten"
-        style={{ backgroundImage: `url(${authBg})` }}
-      />
       
       {/* Overlay Gradient for depth and readability */}
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-dark-900/80 via-transparent to-dark-900/80 pointer-events-none" />
