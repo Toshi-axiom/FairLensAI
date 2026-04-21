@@ -1,23 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { GlassCard } from '../components/GlassCard';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend } from 'recharts';
 import { Activity, Database, AlertTriangle, ShieldCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const biasData = [
-  { name: 'Model V1', score: 65 },
-  { name: 'Model V2', score: 72 },
-  { name: 'Model V3', score: 85 },
-  { name: 'Model V4', score: 88 },
-  { name: 'Model V5', score: 94 },
-];
-
-const demographicData = [
-  { group: 'Segment A', pass: 85, fail: 15 },
-  { group: 'Segment B', pass: 42, fail: 58 },
-  { group: 'Segment C', pass: 78, fail: 22 },
-  { group: 'Segment D', pass: 88, fail: 12 },
-];
+import { useMockApi } from '../hooks/useMockApi';
+import { mockApi } from '../api/mockService';
 
 const LoadingSkeleton = () => (
   <div className="w-full h-full flex flex-col items-center justify-center bg-dark-900/50 rounded-xl border border-white/5 relative overflow-hidden">
@@ -40,12 +28,7 @@ const LoadingSkeleton = () => (
 );
 
 export const Dashboard = () => {
-  const [isScanning, setIsScanning] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsScanning(false), 2500);
-    return () => clearTimeout(timer);
-  }, []);
+  const { data, isLoading: isScanning } = useMockApi(mockApi.getDashboardData);
 
   return (
     <div className="space-y-8 tour-step-1">
@@ -62,7 +45,7 @@ export const Dashboard = () => {
           <div className="flex items-center justify-between gap-3">
             <div className="flex-1 min-w-0">
               <p className="text-tertiary text-[10px] md:text-xs font-display uppercase tracking-widest mb-2 truncate">Active Datasets</p>
-              <h3 className="text-2xl md:text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : '14'}</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : data?.stats.activeDatasets}</h3>
             </div>
             <div className="p-3 shrink-0 bg-dark-800 rounded-xl border border-neon-cyan/30 text-neon-cyan shadow-[0_0_20px_rgba(34,211,238,0.2)]">
               <Database size={24} />
@@ -74,7 +57,7 @@ export const Dashboard = () => {
           <div className="flex items-center justify-between gap-3">
             <div className="flex-1 min-w-0">
               <p className="text-tertiary text-[10px] md:text-xs font-display uppercase tracking-widest mb-2 truncate">Anomalies Detected</p>
-              <h3 className="text-2xl md:text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : '3'}</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : data?.stats.anomaliesDetect}</h3>
             </div>
             <div className="p-3 shrink-0 bg-dark-800 rounded-xl border border-neon-violet/30 text-neon-violet shadow-[0_0_20px_rgba(139,92,246,0.2)]">
               <AlertTriangle size={24} />
@@ -86,7 +69,7 @@ export const Dashboard = () => {
           <div className="flex items-center justify-between gap-3">
             <div className="flex-1 min-w-0">
               <p className="text-tertiary text-[10px] md:text-xs font-display uppercase tracking-widest mb-2 truncate">Global Fairness</p>
-              <h3 className="text-2xl md:text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : '94'}<span className="text-base md:text-lg text-tertiary">%</span></h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : data?.stats.globalFairness}<span className="text-base md:text-lg text-tertiary">%</span></h3>
             </div>
             <div className="p-3 shrink-0 bg-dark-800 rounded-xl border border-neon-blue/30 text-neon-blue shadow-[0_0_20px_rgba(59,130,246,0.2)]">
               <Activity size={24} />
@@ -98,7 +81,7 @@ export const Dashboard = () => {
           <div className="flex items-center justify-between gap-3">
             <div className="flex-1 min-w-0">
               <p className="text-tertiary text-[10px] md:text-xs font-display uppercase tracking-widest mb-2 truncate">Protected Orgs</p>
-              <h3 className="text-2xl md:text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : '8'}</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-primary tracking-wider">{isScanning ? '--' : data?.stats.protectedOrgs}</h3>
             </div>
             <div className="p-3 shrink-0 bg-dark-800 rounded-xl border border-emerald-500/30 text-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.2)]">
               <ShieldCheck size={24} />
@@ -122,7 +105,7 @@ export const Dashboard = () => {
               ) : (
                 <motion.div key="chart" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }} className="w-full h-full">
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={biasData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <AreaChart data={data?.biasData || []} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                       <defs>
                         <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="5%" stopColor="#22D3EE" stopOpacity={0.3}/>
@@ -159,7 +142,7 @@ export const Dashboard = () => {
               ) : (
                 <motion.div key="chart" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }} className="w-full h-full">
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={demographicData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <BarChart data={data?.demographicData || []} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#ffffff08" vertical={false} />
                       <XAxis dataKey="group" stroke="#64748b" tick={{fill: '#64748b', fontSize: 12}} axisLine={false} tickLine={false} />
                       <YAxis stroke="#64748b" tick={{fill: '#64748b', fontSize: 12}} axisLine={false} tickLine={false} />

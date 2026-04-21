@@ -3,10 +3,16 @@ import { GlassCard } from '../components/GlassCard';
 import { BrainCircuit, TriangleAlert, Sparkles } from 'lucide-react';
 import { useAssistant } from '../contexts/AssistantContext';
 import { NeonButton } from '../components/NeonButton';
-
+import { useMockApi } from '../hooks/useMockApi';
+import { mockApi } from '../api/mockService';
 export const Analysis = () => {
   const { openAssistant } = useAssistant();
+  const { data, isLoading } = useMockApi(mockApi.getAnalysisFindings);
 
+  const getColorClasses = (color: string) => {
+    if (color === 'violet') return { borderL: 'border-l-neon-violet', text: 'text-neon-violet', bg: 'bg-neon-violet/10', borderBtn: 'border-neon-violet/30', bgBadge: 'bg-neon-violet/5', borderBadge: 'border-neon-violet/20' };
+    return { borderL: 'border-l-neon-blue', text: 'text-neon-blue', bg: 'bg-neon-blue/10', borderBtn: 'border-neon-blue/30', bgBadge: 'bg-neon-blue/5', borderBadge: 'border-neon-blue/20' };
+  };
   return (
     <div className="flex flex-col h-auto md:h-[calc(100vh-140px)] space-y-4">
       <div className="mb-2 shrink-0 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -43,34 +49,31 @@ export const Analysis = () => {
           </div>
           
           <div className="flex-1 overflow-y-auto space-y-4 pr-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-            {/* Finding 1 */}
-            <div className="p-6 rounded-2xl bg-dark-800/80 border border-border border-l-4 border-l-neon-violet hover:bg-dark-800 transition-colors shadow-lg">
-              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
-                <h4 className="font-medium text-lg text-primary">Gender Imbalance in "Applicant_Income"</h4>
-                <button onClick={openAssistant} className="flex self-start items-center gap-2 text-xs font-semibold text-neon-violet hover:text-white transition-colors bg-neon-violet/10 px-3 py-1.5 rounded-lg border border-neon-violet/30">
-                  <Sparkles size={14} /> Mitigate
-                </button>
+            {isLoading ? (
+              <div className="flex flex-col items-center justify-center h-full opacity-50">
+                <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-neon-cyan mb-4"></div>
+                <p className="font-mono text-neon-cyan text-sm tracking-widest animate-pulse">ANALYZING PARAMETERS...</p>
               </div>
-              <p className="text-secondary mb-4 leading-relaxed">Model assigns 15% lower scores to female applicants holding identical financial metrics. Feature 'zip_code' acts as a proxy.</p>
-              <div className="flex gap-2">
-                <span className="text-xs px-2.5 py-1 bg-neon-violet/5 rounded-md text-neon-violet border border-neon-violet/20 font-mono tracking-wider">PROXY_VARIABLE</span>
-                <span className="text-xs px-2.5 py-1 bg-dark-700 rounded-md text-secondary border border-border uppercase tracking-widest font-semibold">Disparate Impact</span>
-              </div>
-            </div>
-
-            {/* Finding 2 */}
-            <div className="p-6 rounded-2xl bg-dark-800/80 border border-border border-l-4 border-l-neon-blue hover:bg-dark-800 transition-colors shadow-lg">
-              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
-                <h4 className="font-medium text-lg text-primary">Underrepresentation in Training Data</h4>
-                <button onClick={openAssistant} className="flex self-start items-center gap-2 text-xs font-semibold text-neon-blue hover:text-white transition-colors bg-neon-blue/10 px-3 py-1.5 rounded-lg border border-neon-blue/30">
-                  <Sparkles size={14} /> Mitigate
-                </button>
-              </div>
-              <p className="text-secondary mb-4 leading-relaxed">Demographic group 'Native American' constitutes only 0.4% of the dataset, leading to high variance in prediction accuracy.</p>
-              <div className="flex gap-2">
-                <span className="text-xs px-2.5 py-1 bg-neon-blue/5 rounded-md text-neon-blue border border-neon-blue/20 font-mono tracking-wider">SAMPLING_BIAS</span>
-              </div>
-            </div>
+            ) : (
+              data?.findings.map((finding) => {
+                const c = getColorClasses(finding.color);
+                return (
+                  <div key={finding.id} className={`p-6 rounded-2xl bg-dark-800/80 border border-border border-l-4 ${c.borderL} hover:bg-dark-800 transition-colors shadow-lg`}>
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
+                      <h4 className="font-medium text-lg text-primary">{finding.title}</h4>
+                      <button onClick={openAssistant} className={`flex self-start items-center gap-2 text-xs font-semibold ${c.text} hover:text-white transition-colors ${c.bg} px-3 py-1.5 rounded-lg border ${c.borderBtn}`}>
+                        <Sparkles size={14} /> Mitigate
+                      </button>
+                    </div>
+                    <p className="text-secondary mb-4 leading-relaxed">{finding.description}</p>
+                    <div className="flex gap-2">
+                      <span className={`text-xs px-2.5 py-1 ${c.bgBadge} rounded-md ${c.text} border ${c.borderBadge} font-mono tracking-wider`}>{finding.type}</span>
+                      {finding.tag && <span className="text-xs px-2.5 py-1 bg-dark-700 rounded-md text-secondary border border-border uppercase tracking-widest font-semibold">{finding.tag}</span>}
+                    </div>
+                  </div>
+                );
+              })
+            )}
           </div>
         </GlassCard>
       </div>
