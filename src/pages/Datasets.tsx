@@ -7,6 +7,7 @@ import { mockApi } from '../api/mockService';
 export const Datasets = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const [selectedSourceId, setSelectedSourceId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { data, isLoading } = useMockApi(mockApi.getDatasetsData);
 
@@ -67,11 +68,15 @@ export const Datasets = () => {
                 <div className="flex justify-center p-4"><div className="animate-spin h-6 w-6 border-b-2 border-neon-violet rounded-full"></div></div>
               ) : (
                 data?.connectedSources.map((db, i) => (
-                  <div key={i} className="flex items-center justify-between p-4 rounded-lg bg-dark-800 border border-border hover:border-border transition-colors">
+                  <div 
+                    key={i} 
+                    onClick={() => setSelectedSourceId(db.id)}
+                    className={`flex items-center justify-between p-4 rounded-lg bg-dark-800 border cursor-pointer transition-all ${selectedSourceId === db.id ? 'border-neon-violet shadow-[0_0_15px_rgba(139,92,246,0.15)] ring-1 ring-neon-violet/50' : 'border-border hover:border-border/80'}`}
+                  >
                     <div className="flex items-center gap-4">
-                      <FileText className="text-tertiary" />
+                      <FileText className={`transition-colors ${selectedSourceId === db.id ? 'text-neon-violet' : 'text-tertiary'}`} />
                       <div>
-                        <p className="font-medium text-primary">{db.name}</p>
+                        <p className={`font-medium transition-colors ${selectedSourceId === db.id ? 'text-white' : 'text-primary'}`}>{db.name}</p>
                         <p className="text-xs text-tertiary uppercase tracking-wider">{db.type}</p>
                       </div>
                     </div>
@@ -95,8 +100,14 @@ export const Datasets = () => {
             <div className="space-y-3">
               {isLoading ? (
                 <div className="flex justify-center p-4"><div className="animate-spin h-6 w-6 border-b-2 border-neon-cyan rounded-full"></div></div>
-              ) : (
-                data?.dataDictionary.map((field, i) => (
+              ) : !selectedSourceId ? (
+                <div className="p-8 text-center text-tertiary border border-dashed border-border rounded-xl">
+                  <FileText className="mx-auto mb-3 opacity-50" size={32} />
+                  <p>No dataset selected.</p>
+                  <p className="text-xs mt-1 opacity-70">Click a connected source to view.</p>
+                </div>
+              ) : data?.dataDictionary[selectedSourceId as keyof typeof data.dataDictionary] ? (
+                data.dataDictionary[selectedSourceId as keyof typeof data.dataDictionary].map((field, i) => (
                   <div key={i} className={`p-3 rounded-lg border text-sm ${field.flag ? 'bg-neon-violet/10 border-neon-violet/30' : 'bg-dark-800 border-border'}`}>
                     <div className="flex justify-between items-start mb-1">
                       <span className="font-mono text-primary">{field.field}</span>
@@ -110,7 +121,7 @@ export const Datasets = () => {
                     )}
                   </div>
                 ))
-              )}
+              ) : null}
             </div>
           </GlassCard>
         </div>

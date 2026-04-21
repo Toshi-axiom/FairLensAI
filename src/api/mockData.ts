@@ -43,13 +43,20 @@ export const analysisData = {
 
 export const datasetsData = {
   connectedSources: [
-    { name: 'Production_User_Data', type: 'PostgreSQL', status: 'Syncing', color: 'text-neon-cyan' },
-    { name: 'Historical_Loans_2023', type: 'AWS S3 CSV', status: 'Ready', color: 'text-emerald-400' },
+    { id: '1', name: 'Production_User_Data', type: 'PostgreSQL', status: 'Syncing', color: 'text-neon-cyan' },
+    { id: '2', name: 'Historical_Loans_2023', type: 'AWS S3 CSV', status: 'Ready', color: 'text-emerald-400' },
   ],
-  dataDictionary: [
-    { field: 'applicant_income', type: 'Numeric', meaning: 'Annual income in USD', flag: true },
-    { field: 'zip_code', type: 'Categorical', meaning: 'Geographic location', flag: true },
-    { field: 'credit_score', type: 'Numeric', meaning: 'FICO score', flag: false },
-    { field: 'loan_status', type: 'Boolean', meaning: 'Target variable', flag: false },
-  ]
+  dataDictionary: {
+    '1': [
+      { field: 'user_id', type: 'String', meaning: 'Unique identifier v4', flag: false },
+      { field: 'age', type: 'Numeric', meaning: 'Age of applicant in years', flag: true },
+      { field: 'marital_status', type: 'Categorical', meaning: 'Self-reported status', flag: true },
+    ],
+    '2': [
+      { field: 'applicant_income', type: 'Numeric', meaning: 'Annual income in USD', flag: true },
+      { field: 'zip_code', type: 'Categorical', meaning: 'Geographic location', flag: true },
+      { field: 'credit_score', type: 'Numeric', meaning: 'FICO score', flag: false },
+      { field: 'loan_status', type: 'Boolean', meaning: 'Target variable', flag: false },
+    ]
+  }
 };
