@@ -2,15 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, Send, X } from 'lucide-react';
 import { useAssistant } from '../contexts/AssistantContext';
+import { useMockApi } from '../hooks/useMockApi';
+import { mockApi } from '../api/mockService';
 
 export const GlobalAssistant = () => {
   const { isOpen, closeAssistant } = useAssistant();
   const [query, setQuery] = useState('');
-  const [messages, setMessages] = useState([
-    { role: 'assistant', text: "I've detected a significant disparate impact related to gender in the latest model based on the zip_code feature. Would you like me to suggest re-weighing strategies?" },
-    { role: 'user', text: "Show me the proxy variables." },
-    { role: 'assistant', text: "The primary proxy variable is zip_code. Because historical redlining affects geographic distribution, using zip code introduces indirect bias. I recommend dropping this column or applying a fairness-aware adversarial debiasing technique." }
-  ]);
+  const { data, isLoading } = useMockApi(mockApi.getAssistantMessages);
+  const [messages, setMessages] = useState<{role: string, text: string}[]>([]);
+
+  useEffect(() => {
+    if (data?.initialMessages) {
+      setMessages(data.initialMessages);
+    }
+  }, [data]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -75,8 +80,14 @@ export const GlobalAssistant = () => {
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-              {messages.map((msg, idx) => (
-                <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} fade-in`}>
+              {isLoading ? (
+                <div className="flex flex-col items-center justify-center h-full opacity-50">
+                  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-neon-primary mb-4"></div>
+                  <p className="font-mono text-neon-primary text-xs tracking-widest animate-pulse">CONNECTING ASSISTANT...</p>
+                </div>
+              ) : (
+                messages.map((msg, idx) => (
+                  <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} fade-in`}>
                   <div className={`max-w-[85%] border rounded-2xl p-4 shadow-lg ${
                     msg.role === 'user' 
                       ? 'bg-neon-primary/10 border-neon-primary/30 rounded-tr-sm shadow-[0_4px_20px_rgba(var(--neon-primary),0.15)]' 
@@ -89,7 +100,8 @@ export const GlobalAssistant = () => {
                     </p>
                   </div>
                 </div>
-              ))}
+                ))
+              )}
               <div ref={messagesEndRef} />
             </div>
 

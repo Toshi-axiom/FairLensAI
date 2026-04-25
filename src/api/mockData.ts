@@ -60,3 +60,20 @@ export const datasetsData = {
     ]
   }
 };
+
+export const assistantData = {
+  initialMessages: [
+    { role: 'assistant', text: "I've detected a significant disparate impact related to gender in the latest model based on the zip_code feature. Would you like me to suggest re-weighing strategies?" },
+    { role: 'user', text: "Show me the proxy variables." },
+    { role: 'assistant', text: "The primary proxy variable is zip_code. Because historical redlining affects geographic distribution, using zip code introduces indirect bias. I recommend dropping this column or applying a fairness-aware adversarial debiasing technique." }
+  ]
+};
+
+export const welcomeData = {
+  stats: [
+    { label: 'Models Monitored', value: '10M+', color: 'text-neon-cyan', shadow: 'drop-shadow-[0_0_20px_rgba(34,211,238,0.5)]' },
+    { label: 'Biases Mitigated', value: '8.4B', color: 'text-neon-violet', shadow: 'drop-shadow-[0_0_20px_rgba(139,92,246,0.5)]' },
+    { label: 'Uptime', value: '99.9%', color: 'text-neon-blue', shadow: 'drop-shadow-[0_0_20px_rgba(59,130,246,0.5)]' },
+    { label: 'Enterprise Teams', value: '400+', color: 'text-emerald-400', shadow: 'drop-shadow-[0_0_20px_rgba(52,211,153,0.5)]' },
+  ]
+};

@@ -6,6 +6,8 @@ import { loadFull } from 'tsparticles';
 import { NeonButton } from '../components/NeonButton';
 import { ShieldAlert, Activity, Database, CheckCircle2, Users, Scale, Bot } from 'lucide-react';
 import { GlassCard } from '../components/GlassCard';
+import { useMockApi } from '../hooks/useMockApi';
+import { mockApi } from '../api/mockService';
 
 const WelcomeBackground = React.memo(() => {
   const [init, setInit] = useState(false);
@@ -70,6 +72,7 @@ const WelcomeBackground = React.memo(() => {
 export const Welcome = () => {
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
+  const { data, isLoading } = useMockApi(mockApi.getWelcomeStats);
   
   // High-fidelity spring configurations mapped to window scroll position
   const { scrollY } = useScroll();
@@ -274,12 +277,15 @@ export const Welcome = () => {
       {/* Stats Section */}
       <section className="py-24 px-6 relative z-10 border-t border-border bg-gradient-to-b from-black/40 to-dark-900/40">
         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
-          {[
-            { label: 'Models Monitored', value: '10M+', color: 'text-neon-cyan', shadow: 'drop-shadow-[0_0_20px_rgba(34,211,238,0.5)]' },
-            { label: 'Biases Mitigated', value: '8.4B', color: 'text-neon-violet', shadow: 'drop-shadow-[0_0_20px_rgba(139,92,246,0.5)]' },
-            { label: 'Uptime', value: '99.9%', color: 'text-neon-blue', shadow: 'drop-shadow-[0_0_20px_rgba(59,130,246,0.5)]' },
-            { label: 'Enterprise Teams', value: '400+', color: 'text-emerald-400', shadow: 'drop-shadow-[0_0_20px_rgba(52,211,153,0.5)]' },
-          ].map((stat, i) => (
+          {isLoading ? (
+            <div className="col-span-2 md:col-span-4 py-12 flex justify-center text-neon-cyan">
+              <div className="animate-pulse flex flex-col items-center gap-4">
+                <div className="w-12 h-12 rounded-full border-4 border-neon-cyan border-t-transparent animate-spin"></div>
+                <p className="font-mono text-sm tracking-widest">LOADING TELEMETRY...</p>
+              </div>
+            </div>
+          ) : (
+            data?.stats.map((stat, i) => (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -293,7 +299,7 @@ export const Welcome = () => {
               </h4>
               <p className="text-secondary tracking-wide uppercase text-sm font-semibold">{stat.label}</p>
             </motion.div>
-          ))}
+          )))}
         </div>
       </section>
 

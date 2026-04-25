@@ -1,4 +1,4 @@
-import { dashboardData, analysisData, datasetsData } from './mockData';
+import { dashboardData, analysisData, datasetsData, assistantData, welcomeData } from './mockData';
 
 // Helper to simulate network latency
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -17,5 +17,15 @@ export const mockApi = {
   getDatasetsData: async () => {
     await delay(800);
     return datasetsData;
+  },
+
+  getAssistantMessages: async () => {
+    await delay(500);
+    return assistantData;
+  },
+
+  getWelcomeStats: async () => {
+    await delay(600);
+    return welcomeData;
   }
 };
